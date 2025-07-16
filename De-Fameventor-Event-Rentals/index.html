@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Events - Premium Event Rentals</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-pink: #ff69b4;
+            --dark-pink: #d23c7d;
+            --darker-pink: #b03060;
+            --light-pink: #ffe6f2;
+            --white: #ffffff;
+            --dark-gray: #333333;
+            --light-gray: #f5f5f5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Preloader Styles */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .preloader.fade-out {
+            opacity: 0;
+        }
+        
+        .preloader-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--darker-pink);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        
+        .preloader-logo img {
+            width: 80%;
+            height: auto;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        body {
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo img {
+            width: 80px;
+            border-radius: 80px;
+            border: 2px solid var(--dark-pink);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-pink);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark-pink);
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            overflow: hidden;
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .hero-backup {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('asset/hero.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 0 2rem;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-pink);
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid var(--primary-pink);
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary-pink);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-pink);
+            margin-left: 1rem;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-pink);
+            color: var(--white);
+        }
+        
+        /* Categories Section */
+        .categories {
+            padding: 5rem 5%;
+            background-color: var(--light-pink);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark-pink);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: var(--dark-gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        
+        .category-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(210, 60, 125, 0.2);
+        }
+        
+        .category-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .category-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .category-card:hover .category-img img {
+            transform: scale(1.1);
+        }
+        
+        .category-info {
+            padding: 1.5rem;
+        }
+        
+        .category-info h3 {
+            color: var(--dark-pink);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Premium Gallery Section */
+        .premium-gallery {
+            padding: 5rem 5%;
+            background-color: var(--white);
+        }
+        
+        .gallery-slider {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .slider-container {
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+        
+        .slide img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+        
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: var(--white);
+            padding: 2rem;
+        }
+        
+        .slide-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .slider-dot.active {
+            background-color: var(--dark-pink);
+        }
+        
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            color: var(--dark-pink);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+        
+        .slider-arrow:hover {
+            background-color: var(--dark-pink);
+            color: var(--white);
+        }
+        
+        .prev {
+            left: 20px;
+        }
+        
+        .next {
+            right: 20px;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 5rem 5%;
+            background-color: var(--light-pink);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(210, 60, 125, 0.15);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--dark-pink);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-pink);
+        }
+        
+        /* About Us Section */
+        .about {
+            padding: 5rem 5%;
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+        }
+        
+        .about-content {
+            flex: 1;
+            padding-right: 3rem;
+        }
+        
+        .about-img {
+            flex: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            padding: 5rem 5%;
+            background-color: var(--light-pink);
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .testimonial-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .testimonial-text::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary-pink);
+            opacity: 0.2;
+            position: absolute;
+            top: -20px;
+            left: -10px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 1rem;
+        }
+        
+        .author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            color: var(--dark-pink);
+            margin-bottom: 0.2rem;
+        }
+        
+        .author-info p {
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        /* FAQ Section */
+        .faq {
+            padding: 5rem 5%;
+            background-color: var(--white);
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .faq-question {
+            background-color: var(--light-pink);
+            color: var(--dark-pink);
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .faq-answer {
+            background-color: var(--white);
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+        
+        .faq-toggle {
+            transition: transform 0.3s;
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+        
+        /* Policies Section */
+        .policies {
+            padding: 5rem 5%;
+            background-color: var(--light-pink);
+        }
+        
+        .policies-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .policy-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .policy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(210, 60, 125, 0.1);
+        }
+        
+        .policy-icon {
+            font-size: 2.5rem;
+            color: var(--dark-pink);
+            margin-bottom: 1.5rem;
+        }
+        
+        .policy-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-pink);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-pink);
+            color: var(--white);
+            padding: 5rem 5% 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary-pink);
+        }
+        
+        .footer-column p {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--light-pink);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--white);
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-pink);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .credits {
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.5s forwards;
+        }
+        
+        .credits a {
+            color: var(--light-pink);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .credits a:hover {
+            color: var(--white);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 0.9; }
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 1024px) {
+            .category-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .features-grid, .testimonial-grid, .policies-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .about {
+                flex-direction: column;
+            }
+            
+            .about-content {
+                padding-right: 0;
+                margin-bottom: 2rem;
+            }
+            
+            .slide img {
+                height: 400px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                display: block;
+                margin-bottom: 1rem;
+                width: 100%;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+            }
+            
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid, .testimonial-grid, .policies-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .slide img {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-logo">
+            <img src="asset/Defameventor-logo.jpg" alt="Logo">
+        </div>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo"><img src="asset/Defameventor-logo.jpg" alt="logo"></div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Rentals</a></li>
+                <li><a href="#">Gallery</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop>
+            <source src="asset/hero.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-backup"></div>
+        <div class="hero-content">
+            <h1>Transform Your Event With Our Premium Rentals</h1>
+            <p>From elegant weddings to corporate gatherings, we provide everything you need to make your event unforgettable.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn">Browse Rentals</a>
+                <a href="#" class="btn btn-outline">Contact Us</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="section-title">
+            <h2>Our Rental Categories</h2>
+            <p>Explore our wide range of high-quality event rental items to suit any occasion</p>
+        </div>
+        <div class="category-grid">
+            <!-- Category 1 -->
+            <div class="category-card">
+                <div class="category-img">
+                    <img src="asset/tables-and-chairs.jpg" alt="Tables & Chairs">
+                </div>
+                <div class="category-info">
+                    <h3>Tables & Chairs</h3>
+                    <p>Elegant seating solutions for any event</p>
+                </div>
+            </div>
+            
+            <!-- Category 2 -->
+            <div class="category-card">
+                <div class="category-img">
+                    <img src="asset/flower-vase.jpg" alt="Flower Vase">
+                </div>
+                <div class="category-info">
+                    <h3>Flower Vase</h3>
+                    <p>Beautiful fabrics and decorations</p>
+                </div>
+            </div>
+            
+            <!-- Category 3 -->
+            <div class="category-card">
+                <div class="category-img">
+                    <img src="asset/flower.jpg" alt="Flower">
+                </div>
+                <div class="category-info">
+                    <h3>Flower</h3>
+                    <p>Create the perfect ambiance</p>
+                </div>
+            </div>
+            
+            <!-- Category 4 -->
+            <div class="category-card">
+                <div class="category-img">
+                    <img src="asset/tent.jpg" alt="Tents">
+                </div>
+                <div class="category-info">
+                    <h3>Tents</h3>
+                    <p>Coverage for any weather</p>
+                </div>
+            </div>
+            
+            <!-- Category 5 -->
+            <div class="category-card">
+                <div class="category-img">
+                    <img src="asset/table-ware.jpg" alt="Tableware">
+                </div>
+                <div class="category-info">
+                    <h3>Tableware</h3>
+                    <p>Complete dining sets</p>
+                </div>
+            </div>
+            
+            <!-- Category 6 -->
+            <div class="category-card">
+                <div class="category-img">
+                    <img src="asset/fan-mist.jpg" alt="Fan Mist">
+                </div>
+                <div class="category-info">
+                    <h3>Fan Mist</h3>
+                    <p>Event outside during Hot weather</p>
+                </div>
+            </div>
+            
+            <!-- Category 7 -->
+            <div class="category-card">
+                <div class="category-img">
+                    <img src="asset/event.jpg" alt="Staging">
+                </div>
+                <div class="category-info">
+                    <h3>Staging</h3>
+                    <p>Platforms for performances and presentations</p>
+                </div>
+            </div>
+            
+            <!-- Category 8 -->
+            <div class="category-card">
+                <div class="category-img">
+                    <img src="asset/cake-stand.jpg" alt="Specialty Items">
+                </div>
+                <div class="category-info">
+                    <h3>Specialty Items</h3>
+                    <p>Unique pieces to wow your guests</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Premium Gallery Section -->
+    <section class="premium-gallery">
+        <div class="section-title">
+            <h2>Our Event Setups</h2>
+            <p>Browse through our gallery of stunning event setups using our rental items</p>
+        </div>
+        
+        <div class="gallery-slider">
+            <div class="slider-container">
+                <div class="slider">
+                    <!-- Slide 1 -->
+                    <div class="slide">
+                        <img src="asset/wedding.jpg" alt="Wedding Setup">
+                        <div class="slide-content">
+                            <h3>Elegant Wedding Reception</h3>
+                            <p>Chiavari chairs, round tables, and luxurious linens create a romantic atmosphere</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2 -->
+                    <div class="slide">
+                        <img src="asset/corporate.jpg" alt="Corporate Event">
+                        <div class="slide-content">
+                            <h3>Corporate Gala</h3>
+                            <p>Professional staging and lighting for a polished business event</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 3 -->
+                    <div class="slide">
+                        <img src="asset/birthday.jpg" alt="Birthday Party">
+                        <div class="slide-content">
+                            <h3>Birthday Celebration</h3>
+                            <p>Colorful decor and comfortable seating for a festive atmosphere</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slider-nav">
+                <div class="slider-dot active"></div>
+                <div class="slider-dot"></div>
+                <div class="slider-dot"></div>
+            </div>
+            
+            <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features">
+        <div class="section-title">
+            <h2>Why Choose Us</h2>
+            <p>We go above and beyond to make your event rental experience seamless</p>
+        </div>
+        
+        <div class="features-grid">
+            <!-- Feature 1 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <h3>Reliable Delivery</h3>
+                <p>We deliver and pick up all rental items, saving you time and hassle. Our team handles everything with care.</p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-broom"></i>
+                </div>
+                <h3>Impeccably Clean</h3>
+                <p>All items are professionally cleaned and inspected before every rental. We maintain the highest hygiene standards.</p>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Fast Setup</h3>
+                <p>Our experienced team ensures quick and efficient setup, so your event starts on time without stress.</p>
+            </div>
+            
+            <!-- Feature 4 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3>Premium Quality</h3>
+                <p>We invest in high-quality rental items that look beautiful and stand up to event demands.</p>
+            </div>
+            
+            <!-- Feature 5 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Dedicated Support</h3>
+                <p>Our event specialists are available to help with planning and answer any questions you may have.</p>
+            </div>
+            
+            <!-- Feature 6 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <h3>Flexible Packages</h3>
+                <p>Custom rental packages to fit your budget and event needs without compromising quality.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Us Section -->
+    <section class="about">
+        <div class="about-content">
+            <div class="section-title">
+                <h2>About Elegant Events</h2>
+            </div>
+            <p>Founded in 2010, Elegant Events began with a simple mission: to provide beautiful, high-quality rental items that help create unforgettable events. What started as a small inventory of chairs and tables has grown into one of the region's most trusted event rental companies.</p>
+            <p>Our team of event professionals brings decades of combined experience to help you select the perfect items for your occasion. We take pride in our attention to detail, commitment to customer service, and passion for creating beautiful spaces.</p>
+            <p>Whether you're planning an intimate gathering or a large-scale celebration, we're here to make the rental process easy and stress-free.</p>
+            <a href="#" class="btn" style="margin-top: 1.5rem;">Learn More About Us</a>
+        </div>
+        <div class="about-img">
+            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Our Team">
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="section-title">
+            <h2>What Our Clients Say</h2>
+            <p>Don't just take our word for it - hear from our satisfied customers</p>
+        </div>
+        
+        <div class="testimonial-grid">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    <p>The Elegant Events team made our wedding day absolutely perfect. Their rentals were pristine, delivery was on time, and setup was flawless. Our guests couldn't stop complimenting the beautiful chairs and linens!</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-img">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson">
+                    </div>
+                    <div class="author-info">
+                        <h4>Sarah Johnson</h4>
+                        <p>Wedding Client</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    <p>We've used Elegant Events for three corporate events now, and they consistently deliver exceptional service. Their inventory is extensive, and their staff is knowledgeable and helpful in selecting just the right items.</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-img">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael Chen">
+                    </div>
+                    <div class="author-info">
+                        <h4>Michael Chen</h4>
+                        <p>Corporate Client</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    <p>As an event planner, I rely on Elegant Events for all my rental needs. Their quality is unmatched, and they've never let me down, even with last-minute requests. They truly understand the event industry.</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-img">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Jessica Martinez">
+                    </div>
+                    <div class="author-info">
+                        <h4>Jessica Martinez</h4>
+                        <p>Event Planner</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="section-title">
+            <h2>Frequently Asked Questions</h2>
+            <p>Find answers to common questions about our rental services</p>
+        </div>
+        
+        <div class="faq-container">
+            <!-- FAQ Item 1 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What is your rental period?</span>
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Our standard rental period is 24 hours for most items. For weekend events, Friday delivery typically includes Saturday pickup at no additional charge. Extended rental periods are available for an additional fee.</p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 2 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Do you offer delivery and setup?</span>
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! We provide delivery, setup, and pickup services for all rentals. Our team will ensure everything is placed according to your floor plan and properly set up. Delivery fees vary based on location and order size.</p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 3 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How far in advance should I book?</span>
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We recommend booking as soon as your event date is confirmed, especially for weddings and large events during peak seasons (spring and fall). A minimum of 2 weeks' notice is required for most rentals, but last-minute availability may vary.</p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 4 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What is your cancellation policy?</span>
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Cancellations made more than 14 days before the event will receive a full refund. Cancellations between 7-14 days receive a 50% refund. Cancellations within 7 days of the event are non-refundable but may be eligible for rescheduling.</p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 5 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How are your items cleaned?</span>
+                    <i class="fas fa-chevron-down faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>All items are professionally cleaned and inspected after each use. Linens are commercially laundered, hard surfaces are sanitized, and all items undergo quality checks before being rented again. We adhere to strict hygiene protocols.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Policies Section -->
+    <section class="policies">
+        <div class="section-title">
+            <h2>Our Policies</h2>
+            <p>Clear guidelines for a smooth rental experience</p>
+        </div>
+        
+        <div class="policies-grid">
+            <!-- Policy 1 -->
+            <div class="policy-card">
+                <div class="policy-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <h3>Delivery Policy</h3>
+                <p>We offer nationwide delivery with flexible scheduling. Ensure someone is available to receive items at the delivery location during the scheduled window.</p>
+            </div>
+            
+            <!-- Policy 2 -->
+            <div class="policy-card">
+                <div class="policy-icon">
+                    <i class="fas fa-box-open"></i>
+                </div>
+                <h3>Pick-Up Policy</h3>
+                <p>Pick-ups must be done within agreed times. Late returns may attract additional charges. Please inspect all items upon pickup.</p>
+            </div>
+            
+            <!-- Policy 3 -->
+            <div class="policy-card">
+                <div class="policy-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Privacy Policy</h3>
+                <p>We do not share your information with third parties. All communications and transactions are secure and confidential.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Elegant Events</h3>
+                <p>Your premier source for high-quality event rentals. We help create memorable occasions with our extensive inventory and exceptional service.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Rental Catalog</a></li>
+                    <li><a href="#">Gallery</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Rental Categories</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Tables & Chairs</a></li>
+                    <li><a href="#">Linens & Decor</a></li>
+                    <li><a href="#">Lighting</a></li>
+                    <li><a href="#">Tents</a></li>
+                    <li><a href="#">Tableware</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 239, Old Ipaja Road, Abekoko Bus Stop, Iyana Ipaja Lagos, Nigeria</p>
+                <p>We remain your one stop for all event accessories in Lagos and we deliver nationwide.</p>
+                <p>Our Store and DMs are open from 9am–6pm for your enquiries and bookings.</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Elegant Events. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            <p class="credits">Website Created By <a href="#">VEND Agency</a></p>
+        </div>
+    </footer>
+    
+    <script>
+        // Preloader
+        window.addEventListener('load', function() {
+            const preloader = document.querySelector('.preloader');
+            setTimeout(() => {
+                preloader.classList.add('fade-out');
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 500);
+            }, 1000);
+        });
+        
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Slider Functionality
+        const slider = document.querySelector('.slider');
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        const prevBtn = document.querySelector('.prev');
+        const nextBtn = document.querySelector('.next');
+        
+        let currentSlide = 0;
+        const slideCount = slides.length;
+        
+        function updateSlider() {
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+        
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlider();
+            });
+        });
+        
+        // Next button
+        nextBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % slideCount;
+            updateSlider();
+        });
+        
+        // Previous button
+        prevBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+            updateSlider();
+        });
+        
+        // Auto-advance slides (optional)
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slideCount;
+            updateSlider();
+        }, 5000);
+        
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                // Close all other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
