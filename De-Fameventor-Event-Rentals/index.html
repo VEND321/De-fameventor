@@ -69,13 +69,18 @@
             line-height: 1.6;
         }
         
-        /* Header Styles */
+        /* Enhanced Navbar Styles */
         header {
             background-color: var(--white);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        header.sticky {
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
         }
         
         .navbar {
@@ -85,6 +90,7 @@
             padding: 1rem 5%;
             max-width: 1400px;
             margin: 0 auto;
+            position: relative;
         }
         
         .logo img {
@@ -96,6 +102,7 @@
         .nav-links {
             display: flex;
             list-style: none;
+            transition: all 0.3s ease;
         }
         
         .nav-links li {
@@ -107,10 +114,28 @@
             color: var(--dark-gray);
             font-weight: 500;
             transition: color 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
         }
         
         .nav-links a:hover {
             color: var(--primary-pink);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-pink);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
         }
         
         .mobile-menu-btn {
@@ -120,6 +145,47 @@
             font-size: 1.5rem;
             color: var(--dark-pink);
             cursor: pointer;
+            z-index: 1000;
+        }
+        
+        /* Mobile Menu Styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: var(--white);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+                transition: right 0.3s ease;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links a::after {
+                display: none;
+            }
+            
+            .nav-links a.active {
+                color: var(--primary-pink);
+                font-weight: 600;
+            }
         }
         
         /* Hero Section */
@@ -717,14 +783,6 @@
                 padding: 1rem;
             }
             
-            .nav-links {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
             .hero-content h1 {
                 font-size: 2.5rem;
             }
@@ -793,11 +851,11 @@
         <nav class="navbar">
             <div class="logo"><img src="asset/Defameventor-logo.jpg" alt="logo"></div>
             <ul class="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Rentals</a></li>
-                <li><a href="#">Gallery</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#rentals">Rentals</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
             <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
@@ -806,7 +864,7 @@
     </header>
     
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="home">
         <video class="hero-video" autoplay muted loop>
             <source src="asset/hero.mp4" type="video/mp4">
             Your browser does not support the video tag.
@@ -816,14 +874,14 @@
             <h1>Transform Your Event With Our Premium Rentals</h1>
             <p>From elegant weddings to corporate gatherings, we provide everything you need to make your event unforgettable.</p>
             <div class="hero-buttons">
-                <a href="#" class="btn">Browse Rentals</a>
-                <a href="#" class="btn btn-outline">Contact Us</a>
+                <a href="#rentals" class="btn">Browse Rentals</a>
+                <a href="#contact" class="btn btn-outline">Contact Us</a>
             </div>
         </div>
     </section>
     
     <!-- Categories Section -->
-    <section class="categories">
+    <section class="categories" id="rentals">
         <div class="section-title">
             <h2>Our Rental Categories</h2>
             <p>Explore our wide range of high-quality event rental items to suit any occasion</p>
@@ -920,7 +978,7 @@
     </section>
     
     <!-- Premium Gallery Section -->
-    <section class="premium-gallery">
+    <section class="premium-gallery" id="gallery">
         <div class="section-title">
             <h2>Our Event Setups</h2>
             <p>Browse through our gallery of stunning event setups using our rental items</p>
@@ -1034,7 +1092,7 @@
     </section>
     
     <!-- About Us Section -->
-    <section class="about">
+    <section class="about" id="about">
         <div class="about-content">
             <div class="section-title">
                 <h2>About Elegant Events</h2>
@@ -1042,10 +1100,10 @@
             <p>Founded in 2010, Elegant Events began with a simple mission: to provide beautiful, high-quality rental items that help create unforgettable events. What started as a small inventory of chairs and tables has grown into one of the region's most trusted event rental companies.</p>
             <p>Our team of event professionals brings decades of combined experience to help you select the perfect items for your occasion. We take pride in our attention to detail, commitment to customer service, and passion for creating beautiful spaces.</p>
             <p>Whether you're planning an intimate gathering or a large-scale celebration, we're here to make the rental process easy and stress-free.</p>
-            <a href="#" class="btn" style="margin-top: 1.5rem;">Learn More About Us</a>
+            <a href="#contact" class="btn" style="margin-top: 1.5rem;">Contact Us</a>
         </div>
         <div class="about-img">
-            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Our Team">
+            <img src="asset/about-team.jpg" alt="Our Team">
         </div>
     </section>
     
@@ -1064,7 +1122,7 @@
                 </div>
                 <div class="testimonial-author">
                     <div class="author-img">
-                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson">
+                        <img src="asset/client1.jpg" alt="Sarah Johnson">
                     </div>
                     <div class="author-info">
                         <h4>Sarah Johnson</h4>
@@ -1080,7 +1138,7 @@
                 </div>
                 <div class="testimonial-author">
                     <div class="author-img">
-                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael Chen">
+                        <img src="asset/client2.jpg" alt="Michael Chen">
                     </div>
                     <div class="author-info">
                         <h4>Michael Chen</h4>
@@ -1096,7 +1154,7 @@
                 </div>
                 <div class="testimonial-author">
                     <div class="author-img">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Jessica Martinez">
+                        <img src="asset/client3.jpg" alt="Jessica Martinez">
                     </div>
                     <div class="author-info">
                         <h4>Jessica Martinez</h4>
@@ -1210,7 +1268,7 @@
     </section>
     
     <!-- Footer -->
-    <footer>
+    <footer id="contact">
         <div class="footer-content">
             <div class="footer-column">
                 <h3>Elegant Events</h3>
@@ -1226,22 +1284,22 @@
             <div class="footer-column">
                 <h3>Quick Links</h3>
                 <ul class="footer-links">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Rental Catalog</a></li>
-                    <li><a href="#">Gallery</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#rentals">Rental Catalog</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
             
             <div class="footer-column">
                 <h3>Rental Categories</h3>
                 <ul class="footer-links">
-                    <li><a href="#">Tables & Chairs</a></li>
-                    <li><a href="#">Linens & Decor</a></li>
-                    <li><a href="#">Lighting</a></li>
-                    <li><a href="#">Tents</a></li>
-                    <li><a href="#">Tableware</a></li>
+                    <li><a href="#rentals">Tables & Chairs</a></li>
+                    <li><a href="#rentals">Linens & Decor</a></li>
+                    <li><a href="#rentals">Lighting</a></li>
+                    <li><a href="#rentals">Tents</a></li>
+                    <li><a href="#rentals">Tableware</a></li>
                 </ul>
             </div>
             
@@ -1260,86 +1318,172 @@
     </footer>
     
     <script>
-        // Preloader
-        window.addEventListener('load', function() {
-            const preloader = document.querySelector('.preloader');
-            setTimeout(() => {
-                preloader.classList.add('fade-out');
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                }, 500);
-            }, 1000);
-        });
-        
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-        
-        // Slider Functionality
-        const slider = document.querySelector('.slider');
-        const slides = document.querySelectorAll('.slide');
-        const dots = document.querySelectorAll('.slider-dot');
-        const prevBtn = document.querySelector('.prev');
-        const nextBtn = document.querySelector('.next');
-        
-        let currentSlide = 0;
-        const slideCount = slides.length;
-        
-        function updateSlider() {
-            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        // Enhanced Navbar Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            const menuIcon = mobileMenuBtn.querySelector('i');
             
-            // Update dots
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlide);
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                // Toggle between hamburger and close icon
+                if (navLinks.classList.contains('active')) {
+                    menuIcon.classList.remove('fa-bars');
+                    menuIcon.classList.add('fa-times');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+                } else {
+                    menuIcon.classList.remove('fa-times');
+                    menuIcon.classList.add('fa-bars');
+                    document.body.style.overflow = '';
+                }
             });
-        }
-        
-        // Dot navigation
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                currentSlide = index;
-                updateSlider();
-            });
-        });
-        
-        // Next button
-        nextBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide + 1) % slideCount;
-            updateSlider();
-        });
-        
-        // Previous button
-        prevBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide - 1 + slideCount) % slideCount;
-            updateSlider();
-        });
-        
-        // Auto-advance slides (optional)
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % slideCount;
-            updateSlider();
-        }, 5000);
-        
-        // FAQ Accordion
-        const faqItems = document.querySelectorAll('.faq-item');
-        
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            
-            question.addEventListener('click', () => {
-                // Close all other items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active');
+
+            // Close mobile menu when clicking a link
+            const navItems = document.querySelectorAll('.nav-links a');
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        navLinks.classList.remove('active');
+                        menuIcon.classList.remove('fa-times');
+                        menuIcon.classList.add('fa-bars');
+                        document.body.style.overflow = '';
                     }
                 });
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    // Don't scroll if href is just '#'
+                    if (this.getAttribute('href') === '#') return;
+                    
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80, // Account for fixed header
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768 && 
+                    !e.target.closest('.nav-links') && 
+                    !e.target.closest('.mobile-menu-btn') &&
+                    navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuIcon.classList.remove('fa-times');
+                    menuIcon.classList.add('fa-bars');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // Sticky header on scroll
+            const header = document.querySelector('header');
+            window.addEventListener('scroll', () => {
+                header.classList.toggle('sticky', window.scrollY > 0);
+            });
+
+            // Highlight active section in navbar
+            const sections = document.querySelectorAll('section');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.scrollY >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    const href = item.getAttribute('href');
+                    if (href === `#${current}`) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+
+            // Preloader
+            window.addEventListener('load', function() {
+                const preloader = document.querySelector('.preloader');
+                setTimeout(() => {
+                    preloader.classList.add('fade-out');
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 500);
+                }, 1000);
+            });
+
+            // Slider Functionality
+            const slider = document.querySelector('.slider');
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            const prevBtn = document.querySelector('.prev');
+            const nextBtn = document.querySelector('.next');
+            
+            let currentSlide = 0;
+            const slideCount = slides.length;
+            
+            function updateSlider() {
+                slider.style.transform = `translateX(-${currentSlide * 100}%)`;
                 
-                // Toggle current item
-                item.classList.toggle('active');
+                // Update dots
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+            
+            // Dot navigation
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentSlide = index;
+                    updateSlider();
+                });
+            });
+            
+            // Next button
+            nextBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide + 1) % slideCount;
+                updateSlider();
+            });
+            
+            // Previous button
+            prevBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+                updateSlider();
+            });
+            
+            // Auto-advance slides (optional)
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slideCount;
+                updateSlider();
+            }, 5000);
+            
+            // FAQ Accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Close all other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current item
+                    item.classList.toggle('active');
+                });
             });
         });
     </script>
